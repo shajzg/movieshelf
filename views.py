@@ -6,6 +6,18 @@ from pymovieshelf.models import Movie
 from django.contrib.auth.decorators import user_passes_test
 import re
 
+from django.views.generic import ListView,DetailView
+
+class MovieList(ListView):
+    model = Movie
+
+class MovieDetailView(DetailView):
+    queryset = Movie.objects.all()
+    def get_object(self):
+	object = super(MovieDetailView,self).get_object()
+        object.save()
+        return object
+
 def staff_required(login_url=None):
         return user_passes_test(lambda u: u.is_staff, login_url=login_url)
 
