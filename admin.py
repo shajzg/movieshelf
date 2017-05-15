@@ -1,4 +1,8 @@
 from pymovieshelf.models import Movie
 from django.contrib import admin
 
-admin.site.register(Movie)
+class MovieAdmin(admin.ModelAdmin):
+    list_display = ('title','chinesetitle','year')
+
+admin.site.register(Movie,MovieAdmin)
+
