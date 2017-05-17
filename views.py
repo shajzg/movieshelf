@@ -48,6 +48,16 @@ def add_imdb(request):
             y = ''
 
         try:
+            d = m['director'][0]['name']
+        except KeyError:
+            d = ''
+
+        try:
+            rt = m['rating']
+        except KeyError:
+            rt = ''
+
+        try:
             c = m['full-size cover url'].strip()
         except KeyError:
             c = ''
@@ -63,7 +73,7 @@ def add_imdb(request):
             r = ''
 
         newmovie = Movie(title=t, fmt=request.POST['format'], genres=g, year=y,
-                         summary=s, length=r, img=c,
+                         summary=s, length=r, img=c,director=d,rating=rt,
                          url='http://www.imdb.com/title/tt%s/' %
                          (request.POST['movie_id'], ))
         newmovie.save()

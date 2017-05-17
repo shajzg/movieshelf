@@ -36,8 +36,11 @@
                             <thead>
                                 <tr>
                                     <th>Title</th>
-                                    <th>影片名</th>
+                                    <th>ChineseTitle</th>
                                     <th>Year</th>
+                                    <th>Director</th>
+                                    <th>Rating</th>
+                                    <th>Format</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -46,6 +49,9 @@
                                     <td><a href="/pymovieshelf/{{ object.id }}/">{{ object.title }}</a></td>
                                     <td><a href="/pymovieshelf/{{ object.id }}/">{{ object.chinesetitle }}</a></td>
                                     <td>{{ object.year }}</td>
+                                    <td>{{ object.director }}</td>
+                                    <td>{{ object.rating }}</td>
+                                    <td>{{ object.fmt }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>

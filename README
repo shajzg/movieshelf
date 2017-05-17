@@ -1,0 +1,5 @@
+use djangoadmin to start a app name pymovieshelf
+modify setting.py 
+  add template dir
+  add static dir 
+  

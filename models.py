@@ -5,9 +5,11 @@ class Movie(models.Model):
     chinesetitle = models.CharField(max_length=200)
     year = models.PositiveIntegerField()
     genres = models.CharField(max_length=200)
+    director = models.CharField(max_length=100)
     summary = models.TextField()
     fmt = models.CharField(max_length=20)
     length = models.PositiveIntegerField()
+    rating = models.FloatField()
     url = models.URLField()
     img = models.URLField()
 
