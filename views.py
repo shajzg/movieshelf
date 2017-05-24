@@ -69,6 +69,10 @@ def add_imdb(request):
 
         try:
             r = re.sub(r'(USA\:)?(?P<runtime>\d+).*', r'\g<runtime>', m['runtime'][0])
+            # for films not release in USA
+	    if r.find(":") < 0:
+                r = ''
+	    r = r.split(":")[1]
         except KeyError:
             r = ''
 
