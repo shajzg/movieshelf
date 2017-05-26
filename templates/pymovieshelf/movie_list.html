@@ -8,13 +8,13 @@
         <meta http-equiv="Content-language" content="en" />
         <link rel="stylesheet" type="text/css" href="/static/media/css/pymovieshelf/pymovieshelf.css" />
         <meta name="description" content="Python based DVD manager." />
-        <title>pyMovieShelf</title>
+        <title>Movieshelf</title>
     </head>
     <body onload="document.search_form.title.focus();">
         <div class="outer">
             <div class="middle">
                 <div class="header">
-                    <h1>pyMovieShelf</h1>
+                    <h1>John's Movieshelf</h1>
                     {% if user.is_authenticated %}
                     <div class="userinfo"><a href="/admin/pymovieshelf/movie/" style="padding-right:20px">Admin</a><a href="/admin/logout/">Log out</a></div>
                     {% else %}
@@ -27,7 +27,10 @@
                         <fieldset>
                             <label for="title">Title: </label>
                             <input type="text" name="title" id="title" />
-                            <input type="submit" value="Search" name="submit" />
+                            <input type="submit" class="button" value="Search" name="submit" />
+			    <input type="radio" name="search" value="entitle" checked>片名
+			    <input type="radio" name="search" value="cntitle">中文片名
+			    <input type="radio" name="search" value="director">导演
                         </fieldset>
                     </form>
                     <div class="list">

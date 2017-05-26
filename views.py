@@ -70,9 +70,8 @@ def add_imdb(request):
         try:
             r = re.sub(r'(USA\:)?(?P<runtime>\d+).*', r'\g<runtime>', m['runtime'][0])
             # for films not release in USA
-	    if r.find(":") < 0:
-                r = ''
-	    r = r.split(":")[1]
+	    if r.find(":") > 0:
+	    	r = r.split(":")[1]
         except KeyError:
             r = ''
 
@@ -95,7 +94,13 @@ def add_imdb(request):
 
 def search(request):
     if request.POST and 'title' in request.POST:
-        movie_list = Movie.objects.filter(title__icontains=request.POST['title'])
+	searchtype = request.POST['search']
+        if searchtype == "entitle":
+        	movie_list = Movie.objects.filter(title__icontains=request.POST['title']).order_by('-rating')
+        if searchtype == "cntitle":
+        	movie_list = Movie.objects.filter(chinesetitle__icontains=request.POST['title']).order_by('-rating')
+        if searchtype == "director":
+        	movie_list = Movie.objects.filter(director__icontains=request.POST['title']).order_by('-rating')
         return render_to_response('pymovieshelf/movie_list.html',
                 {'object_list': movie_list,},
                 context_instance=RequestContext(request))
