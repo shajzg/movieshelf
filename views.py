@@ -1,10 +1,12 @@
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render_to_response, redirect,render
 from django.template import RequestContext
 from django.http import HttpResponse
 import imdb
 from pymovieshelf.models import Movie
 from django.contrib.auth.decorators import user_passes_test
 import re
+import simplejson as json
+from django.core import serializers
 
 from django.views.generic import ListView,DetailView
 
@@ -20,6 +22,9 @@ class MovieDetailView(DetailView):
 
 def staff_required(login_url=None):
         return user_passes_test(lambda u: u.is_staff, login_url=login_url)
+
+def index(request):
+    return render(request,'pymovieshelf/index.html')
 
 @staff_required(login_url='/admin/')
 def add_imdb(request):
@@ -73,7 +78,7 @@ def add_imdb(request):
 	    if r.find(":") > 0:
 	    	r = r.split(":")[1]
         except KeyError:
-            r = ''
+            r = 0
 
         newmovie = Movie(title=t, fmt=request.POST['format'], genres=g, year=y,
                          summary=s, length=r, img=c,director=d,rating=rt,
@@ -106,3 +111,28 @@ def search(request):
                 context_instance=RequestContext(request))
     else:
         return redirect('/pymovieshelf/')
+
+def searchmovie(request):
+    # post with json data
+    rtnjson = "[]"
+    if request.method == 'POST':
+        try:
+            json_postdata = json.loads(request.body)
+            searchtype = json_postdata['searchtype']
+            moviecontent = json_postdata['moviecontent']
+            if moviecontent:
+                if searchtype == "entitle":
+                        movie_list = Movie.objects.filter(title__icontains=moviecontent)
+                if searchtype == "cntitle":
+                        movie_list = Movie.objects.filter(chinesetitle__icontains=moviecontent)
+                if searchtype == "director":
+                        movie_list = Movie.objects.filter(director__icontains=moviecontent)
+            else:
+                movie_list = Movie.objects.all()
+            rtnjson = serializers.serialize('json',movie_list)
+            return HttpResponse(rtnjson,"application/json")
+        except:
+            return HttpResponse(rtnjson,"application/json")
+    else:
+        return HttpResponse(rtnjson,"application/json")
+

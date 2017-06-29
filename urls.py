@@ -4,8 +4,8 @@ from django.views import generic
 
 urlpatterns = patterns(
     '',
-    (r'^$', MovieList.as_view()),
+    (r'^$', 'pymovieshelf.views.index'),
     (r'^add_imdb/', 'pymovieshelf.views.add_imdb'),
-    (r'^search/', 'pymovieshelf.views.search'),
+    (r'^searchmovie/', 'pymovieshelf.views.searchmovie'),
     (r'^(?P<pk>\d+)/$',MovieDetailView.as_view()),
 )
