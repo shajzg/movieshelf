@@ -1,8 +1,5 @@
-(function() {
-var app = angular.module("movieshelf",[]).config(function($interpolateProvider){
-        $interpolateProvider.startSymbol('{$');
-        $interpolateProvider.endSymbol('$}');
-     });
+
+ var app = angular.module("movieshelf");
 
  var MainController = function($scope,$http,$log){
     $scope.title = "John's Movieshelf";
@@ -32,4 +29,3 @@ var app = angular.module("movieshelf",[]).config(function($interpolateProvider){
  };
 
  app.controller("MainController",MainController);
-}());
