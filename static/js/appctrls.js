@@ -7,6 +7,7 @@
     $scope.searchtype = "entitle";
     $scope.moviecontent = "";
     $scope.movieSortOrder = "-fields.year"
+    $scope.reverse = true;
 
     var onMovieList = function(response){
         $scope.movies = response.data;

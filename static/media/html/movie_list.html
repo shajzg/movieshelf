@@ -1,38 +1,24 @@
 <div class="content">
-    <form name="searchmovie" class="search_form" ng-submit="search(moviecontent,searchtype)">
-        <fieldset>
-            <label for="title">Title: </label>
-            <input type="text" name="title" id="title" ng-model="moviecontent"/>
-            <input type="submit" class="button" value="Search"/>
-			 <input type="radio" name="search" value="entitle" ng-model="searchtype">片名
-			 <input type="radio" name="search" value="cntitle" ng-model="searchtype">中文片名
-			 <input type="radio" name="search" value="director" ng-model="searchtype">导演
-        </fieldset>
-    </form>
     <div>
-        <div><label>Total: {$movies.length$} Movies </label></div>
-        <div class="orderby" >
-        <label>Orderby:</label>
-        <select class="select" ng-model="movieSortOrder">
-            <option value="-fields.year">Year</option>
-            <option value="-fields.rating">Rating</option>
-        </select>
-        </div>
+            <label for="title">Search: </label>
+            <input type="text" name="title" id="title" ng-model="moviecontent"/>
+            <label>Total: {$movies.length$} Movies </label>
     </div>
-    <div class="list" ng-show="movies">
+    <div></div>
+    <div class="list" ng-show="movies" >
         <table class="tbl_list">
             <thead>
                 <tr>
-                    <th>Title</th>
-                    <th>ChineseTitle</th>
-                    <th>Year</th>
-                    <th>Director</th>
-                    <th>Rating</th>
-                    <th>Format</th>
+                    <th><a href="" ng-click="movieSortOrder='fields.title';reverse = !reverse">Title</th>
+                    <th><a href="" ng-click="movieSortOrder='fields.chinesetitle';reverse = !reverse">ChineseTitle</th>
+                    <th><a href="" ng-click="movieSortOrder='-fields.year';reverse = !reverse">Year</th>
+                    <th><a href="" ng-click="movieSortOrder='fields.director';reverse = !reverse">Director</th>
+                    <th><a href="" ng-click="movieSortOrder='fields.rating';reverse = !reverse">Rating</th>
+                    <th><a href="" ng-click="movieSortOrder='fields.fmt';reverse = !reverse">Format</th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="movie in movies | orderBy:movieSortOrder">
+                <tr ng-repeat="movie in movies | orderBy:movieSortOrder:reverse | filter:moviecontent">
                     <td><a href="/pymovieshelf/{$movie.pk$}/">{$movie.fields.title$}</    a></td>
                     <td><a href="/pymovieshelf/{$movie.pk$}/">{$movie.fields.chinesetitle$}</a></td>
                     <td>{$ movie.fields.year $}</td>
