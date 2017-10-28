@@ -136,3 +136,10 @@ def searchmovie(request):
     else:
         return HttpResponse(rtnjson,"application/json")
 
+#=======================REST API=========================
+from rest_framework import generics
+from pymovieshelf.serializers import MovieSerializer
+
+class ListCreateMovies(generics.ListCreateAPIView):
+    queryset = Movie.objects.all()
+    serializer_class = MovieSerializer
