@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import user_passes_test
 import re
 import simplejson as json
 from django.core import serializers
+from django.views.decorators.csrf import csrf_exempt
 
 from django.views.generic import ListView,DetailView
 
@@ -96,7 +97,7 @@ def add_imdb(request):
         return render_to_response('pymovieshelf/add_imdb.html',
                 {},
                 context_instance=RequestContext(request))
-
+@csrf_exempt
 def search(request):
     if request.POST and 'title' in request.POST:
 	searchtype = request.POST['search']
@@ -112,6 +113,7 @@ def search(request):
     else:
         return redirect('/pymovieshelf/')
 
+@csrf_exempt
 def searchmovie(request):
     # post with json data
     rtnjson = "[]"
@@ -137,9 +139,3 @@ def searchmovie(request):
         return HttpResponse(rtnjson,"application/json")
 
 #=======================REST API=========================
-from rest_framework import generics
-from pymovieshelf.serializers import MovieSerializer
-
-class ListCreateMovies(generics.ListCreateAPIView):
-    queryset = Movie.objects.all()
-    serializer_class = MovieSerializer
